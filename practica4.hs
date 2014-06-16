@@ -1,3 +1,4 @@
+module practica4 where
 -- 1)
 nextDiv :: Integer -> Integer -> Integer
 nextDiv x y = if y `mod` h == 0 then h else nextDiv h y
@@ -25,60 +26,71 @@ prime x = primeRec 2 x
 
 phi i = let phiRec a b = if prime b then if a == 1 then b else phiRec (a-1) (b+1) else phiRec a (b+1)
         in phiRec i 2 
+{-
+2.a) Demostrar: 
+    flip (curry f) = curry (f . swap)
+= Por principio de extensionalidad (2 veces)
+    flip (curry f) x y = curry (f . swap) x y
 
--- 3)
--- * Tiene infinitos elementos
--- * Todos sus elementos o bien satisfacen una regla base, o satisfacen una regla inductiva
--- * Todos sus elementos son finitos
--- * El orden basado en "es parte de" es bien fundado (o sea, toda cadena
---   descendente es finita). Ej: Z es parte de SZ, SZ es parte de SSZ, etc.
+    flip (curry f) x y
+= definición de flip
+    (curry f) y x
+= definición de curry 
+    f (x,y)             (A)
 
--- 4)
---  Demostrar: flip (curry f) = curry (f . swap)
---
--- flip (curry f)
--- = principio de extensionalidad (2 veces)
---      flip (curry f) x y
--- = definición de flip
---      (curry f) y x
--- = definición de curry 
---      f (x,y)             (A)
---
---      curry (f . swap)
--- = principio de extensionalidad (2 veces)
---      curry (f . swap) x y
--- = definición de curry
---      (f . swap) (x,y)
--- = definición de composición (.)
---      f (swap(x,y))
--- = definición de swap
---      f (x,y)             (B) 
--- ==> (A) = (B)    ✓
---                       ∎
---------------------------------------------------
--- Demostrar: sum f i j + sum f (j+1) k = sum f i k
---
--- Por inducción en j-i:
--- Caso base: j-i = 0   ==>  j = i 
--- ==>  sum f i j + sum f (j+1) k = sum f (j+1) k 
---      sum f i j = f i   por definición de sum
--- ==>  f i + sum f (i+1) k = sum f i k 
---      dado que i < i+1 <= k ; por definición de suma
--- ==>  sum f i k = sum f i k      
---                              ✓
---
--- Hipótesis inductiva: j-i = n+1 ==> j - (i+1) = n
---      sum f (i+1) j + sum (j+1) k = sum f (i+k) k
--- Tesis inductiva: j-i = n
---      sum f i j + sum (j+1) k = sum i k
--- Demo:
---      sum f i j + sum (j+1) k =
---  = por definición de sum
---      sum (i+1) j + f i + sum (j+1) k =
---  = por HI
---      sum (i+1) k + f i
---  = por definición de sum
---      sum i k
+    curry (f . swap) x y
+= definición de curry
+    (f . swap) (x,y)
+= definición de composición (.)
+    f (swap(x,y))
+= definición de swap
+    f (x,y)             (B) 
+
+    (A) = (B)    ✓
+                        ∎
+
+2.b) Demostrar: 
+    sum f i j + sum f (j+1) k = sum f i k
+
+Demostración por inducción en j-i:
+‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+Caso base: j-i = 0   ==>  j = i
+‾‾‾‾‾‾‾‾‾‾
+    sum f i j + sum f (j+1) k = sum f i k 
+= Por definión de sum y sabiendo que j = i
+    f i + sum f (i+1) k = sum f i k 
+= Por definición de sum, dado que i < i+1 ≤ k
+    sum f i k = sum f i k      
+                            ✓
+
+Hipótesis inductiva: j-i = n+1 ==> j-(i+1) = n
+‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+    sum f (i+1) j + sum f (j+1) k = sum f (i+k) k
+
+Tesis inductiva: j-i = n
+‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+    sum f i j + sum f (j+1) k = sum f i k
+
+Demostración:
+‾‾‾‾‾‾‾‾‾‾‾‾‾
+    sum f i j + sum f (j+1) k
+ = por definición de sum
+    sum f (i+1) j + f i + sum f (j+1) k
+ = por hipótesis inductiva
+    sum f (i+1) k + f i
+ = por definición de sum
+    sum f i k   ✓
+                     ∎
+
+3)
+* Tiene infinitos elementos
+* Todos sus elementos o bien satisfacen una regla base, o satisfacen una regla inductiva
+* Todos sus elementos son finitos
+* El orden basado en "es parte de" es bien fundado (o sea, toda cadena
+  descendente es finita). Ej: Z es parte de SZ, SZ es parte de SSZ, etc.
+-}
+
+-- 4) TODO
 
 -- 5)
 hailstone n = if n <= 1

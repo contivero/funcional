@@ -143,8 +143,13 @@ moreThan n (xs:xss) = if length xs > n then xs : moreThan n xss else moreThan n 
 --      (A) = (B)   ✓
 --                      ∎
 --
--- 5.b)
--- sum xs ≤ length xs * maxl xs 
+-- 5.b) TODO
+--
+-- 6) Demostrar sum xs ≤ length xs * maxl xs, con maxl:
+-- maxl [] = 0
+-- maxl (x:xs) = x `max` maxl xs
+-- Sabiendo que xs es una lista finita de números naturales
+-- 
 -- Demostración por inducción en xs
 -- ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 -- Caso base: xs = []
@@ -195,7 +200,7 @@ moreThan n (xs:xss) = if length xs > n then xs : moreThan n xss else moreThan n 
 --
 --      (A) ≤ (B)   ✓
 --
--- Subcaso y <= maxl ys:
+-- Subcaso y ≤ maxl ys:
 -- ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 --      (1 + length ys) * (y `max` maxl ys)
 -- = Por definición de max
@@ -205,15 +210,11 @@ moreThan n (xs:xss) = if length xs > n then xs : moreThan n xss else moreThan n 
 --
 --      (A) ≤ (C)   ✓
 --                      ∎
---
--- 6) TODO
-maxl [] = 0
-maxl (x:xs) = x `max` maxl xs
-
 
 -- 7)
 -- Para entender más, leer sobre 'Church booleans'.
---TODO definición en internet?:  ifThenElse_Lam = \x -> \y -> \z -> x y z
+-- TODO preguntar por qué definición en internet es:  ifThenElse_Lam = \x -> \y -> \z -> x y z
+{-
 ifThenElse_Lam = \x -> x
 true_Lam = \x -> \y -> x
 false_Lam = \x -> \y -> y
@@ -228,13 +229,14 @@ iff_Lam = \x -> \y -> or_Lam (and_Lam x y) (and_Lam (not_Lam x) (not_Lam y))
 pair_Lam = \x -> \y -> \z -> ifThenElse_Lam z x y
 fst_Lam = \x -> x true_Lam 
 snd_Lam = \x -> x false_Lam
+-}
 
 -- 9)
 -- b)
 oddsIn [] = []
 oddsIn (x:xs) = if x `mod` 2 == 1 then x : oddsIn xs else oddsIn xs
 
--- 10) TODO: como defino la suma de DigBin ?
+-- 10) TODO: completar
 data DigBin = Cero | Uno
 suma Cero x = x
 suma x Cero = x

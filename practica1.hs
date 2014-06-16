@@ -5,8 +5,7 @@ isEven n = (mod n 2 == 0)
 seven :: a -> Int
 seven n = 7
 
---signo :: Num a => a -> Int
-signo :: Int -> Int
+signo :: (Ord a, Num a) => a -> Int
 signo n | n < 0 = -1
         | n > 0 = 1
         | otherwise = 0
@@ -68,5 +67,5 @@ sort3' x y z = insert x (sort2 y z)
     where insert a (b,c) 
             | a <= b = (a, b, c)
             | a >= c = (b, c, a)
-            | othersiwe = (b, a, c)
+            | otherwise = (b, a, c)
           sort2 d e = if e <= d then (e, d) else (d, e)

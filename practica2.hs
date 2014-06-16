@@ -36,7 +36,7 @@ second (x,y) = y
 const :: a -> b -> a
 const x y = x
 
---compose :: (a -> b) -> (c -> a) -> (c -> b)
+
 compose :: (a -> b) -> (c -> a) -> c -> b
 compose f g = (\x -> f(g x))
 
@@ -49,17 +49,24 @@ subst f g x = f x (g x)
 pairFunc :: (a-> b, c) -> d -> a -> (a -> b, (c, d), b) 
 pairFunc (f1,f2) x y = (f1, (f2, x), (f1 y))
 
--- 5) A language is statically typed if the type of a variable is known at compile time. This in practice means that you as the programmer must specify what type each variable is. Example: Java, C, C++
--- The main advantage here is that all kinds of checking can be done by the compiler, and therefore a lot of stupid bugs are caught at a very early stage.
+{-
+5) A language is statically typed if the type of a variable is known at compile
+   time. This in practice means that you as the programmer must specify what 
+   type each variable is. The main advantage here is that all kinds of checking
+   can be done by the compiler, and therefore a lot of stupid bugs are caught at
+   a very early stage.
+-}
 
--- 6) 
--- a_ Bien formada. Rta: 16
--- b_ Mal formada, falta el else
--- c_ Depende? := No tiene un significado especifico en haskell,
---    se podria definir la funcion := y usarla.
--- d_ Mal formada. x no puede ser un numero y Bool al mismo tiempo
--- e_ Bien formada. Rta: False
--- f_ Mal formada, necesito separar ambos con &&
+{-
+6) 
+a_ Bien formada. Rta: 16
+b_ Mal formada, falta el else
+c_ Depende? := No tiene un significado especifico en haskell,
+   se podria definir la funcion := y usarla.
+d_ Mal formada. x no puede ser un numero y Bool al mismo tiempo
+e_ Bien formada. Rta: False
+f_ Mal formada, necesito separar ambos con &&
+-}
 
 -- 7)
 data ColorPrimario = Azul | Rojo | Amarillo deriving (Eq, Show)
@@ -123,16 +130,17 @@ mover (Rectangulo (Punto x1 y1) (Punto x2 y2)) (Punto a b) =
 --data Figura3D = Esfera Punto3D Float | Cubo Punto3D  Punto3D  Punto3D  Punto3D |
 --                Elipsoide
 
--- 9)
--- id x tendria tipo de lo que fuera x, pero una vez que digo ese x ya estoy definiendo
--- cual es el tipo y deja de ser generico... como hago?
+{-
+9) TODO 
 
--- 10) Ejercicio 1.6.3 del "Introduction to Functional
--- Programming using Haskell" de Bird.
--- La función es invalida. El argumento de tom es una función (única forma
--- de que el retorno x x sea valido). Supongamos que x :: A -> B; x se aplica
--- a x, por lo que tendría que ser A = A -> B, pero no existe tal tipo A que
--- pueda cumplir con ello.
+10) 
+Ejercicio 1.6.3 del "Introduction to Functional Programming using Haskell"
+de Bird.
+La función es invalida. El argumento de tom es una función (única forma
+de que el retorno x x sea valido).
+Supongamos que x :: A -> B; x se aplica a x, por lo que tendría que ser 
+A = A -> B, pero no existe tal tipo A que pueda cumplir con ello.
+-}
 
 smaller (x,y,z) | x <= y && x <= z = x
                 | y <= x && y <= z = y
@@ -168,6 +176,7 @@ iff' x y = if x then not y else y
 -- que entre ellas son iguales
 alpha :: a -> b -> b
 alpha = \x -> \x -> x
+
 alpha' :: a -> b -> b
 alpha' x y = y
 
@@ -175,9 +184,11 @@ bhaskara :: Floating a => (a,a,a) -> (a,a)
 bhaskara (a,b,c) = (-b + aux , -b - aux) 
     where aux = (sqrt $ b^2 - (4*a*c))/(2*a)
 
--- 14)
--- a_ No esta bien formada: Error de tipos
--- b_ No, no se puede hacer && entre Num y Bool: Error de tipo
--- c_ Esta bien formada. Rta: 4
--- d_ No, no se sabe si retorna Bool o Num: Error de tipo
--- e_ Qué es a? Qué b? Qué hago con el ; ? Error sintáctico 
+{-
+14)
+a_ No esta bien formada: Error de tipo
+b_ No, no se puede hacer && entre Num y Bool: Error de tipo
+c_ Esta bien formada. Rta: 4
+d_ No, no se sabe si retorna Bool o Num: Error de tipo
+e_ Qué es a? Qué b? Qué hago con el ;? : Error sintáctico 
+-}

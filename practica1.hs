@@ -98,14 +98,14 @@ sort3' x y z = insert x (sort2 y z)
                    then (e,d) 
                    else (d,e)
 
-  sort3'' x y z = if x < y
-                     then if y < z
-                             then (x,y,z)
-                             else if x > z
-                                     then (z,x,y)
-                                     else (x,z,y)
-                     else if x > z
-                             then if y < z
-                                     then (y,z,x)
-                                     else (z,y,x)
-                             else if y,x,z
+sort3'' x y z = if x < y
+                   then if y < z
+                           then (x,y,z)
+                           else if z < x
+                                   then (z,x,y)
+                                   else (x,z,y)
+                   else if x < z
+                           then (y,x,z)
+                           else if y < z
+                                   then (y,z,x)
+                                   else (z,y,x)

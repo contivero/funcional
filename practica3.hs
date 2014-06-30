@@ -2,18 +2,18 @@ import Data.Char
 {-
 1.a)
 1_ and' y or' de la práctica 1
-2_ primero x y = x 
-   primero' x y = id x 
+2_ primero x y = x
+   primero' x y = id x
 3_ fun f g x = (f x, g x)
 4_ add x y = x + y
-   substract x y = x - y 
+   substract x y = x - y
 5_ func f x = f x    siendo f cualquier funcion unaria de tipo Int -> Int (por ejemplo: factorial)
-6_ flip f x y = f y x 
+6_ flip f x y = f y x
 
-1.b) 
+1.b)
 1_ brokenAnd True x = x
    brokenOr False x = x
-2_ 
+2_
 3_
 4_
 5_
@@ -22,7 +22,7 @@ import Data.Char
 2) "In Haskell, all functions are considered curried: That is, all functions
    in Haskell take just single arguments."
    Fuente: www.haskell.org/haskellwiki/Currying
-   
+
    De todas formas, depende de como uno lo interprete!
 
 a_ Es de alto orden porque recibe una función.
@@ -31,7 +31,7 @@ a_ Es de alto orden porque recibe una función.
 b_ Es de alto orden porque recibe una función. Esta currificada.
 c.1_ No es de alto orden ya que no recibe ni retorna una función.
      Si está o no currificada depende de la interpretación. Técnicamente
-     recibe una terna, desde ese punto de vista si, pero si uno lo toma 
+     recibe una terna, desde ese punto de vista si, pero si uno lo toma
      como que recibe tres valores de tipo Char, hace algo con eso y retorna
      Bool, entonces no.
  .2_ Se sigue comportando igual, pero aumentó la expresividad. En este
@@ -39,10 +39,10 @@ c.1_ No es de alto orden ya que no recibe ni retorna una función.
      (tipo Pers), sino que fTres recibe algo de tipo Pers.
 -}
 
--- 3) Tomemos x = 5, y supongamos la siguiente definición de ## solo 
+-- 3) Tomemos x = 5, y supongamos la siguiente definición de ## solo
 --    para probar. Entonces ej3 = (##5)
 a ## b = a*2 + b*3
-ej3 = \y -> y ## 5   
+ej3 = \y -> y ## 5
 
 -- 4) TODO preguntar!
 
@@ -120,4 +120,4 @@ h x y = f (g x y) ==> h x y = (f.(g x))y   Por definición de composición
 compose :: (a -> b) -> (c -> a) -> c -> b
 compose f g = (\x -> f(g x))
 
-sumDigit c x = compose (+x) digitToInt c 
+sumDigit c x = compose (+x) digitToInt c

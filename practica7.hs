@@ -3,7 +3,7 @@ import Data.Char (ord, isAlpha) -- Usado para "codes" y "chars" del ejercicio 1
 Recordar !
 filter :: (a -> Bool) -> [a] -> [a]
 filter f [] = []
-filter f (x:xs) = if f x 
+filter f (x:xs) = if f x
                   then x:(filter f xs)
                   else filter f xs
 
@@ -48,7 +48,7 @@ pal = reverse >>= (==) -- TODO: Magia monádica, ver bien que hace!
 hs :: [[Char]] -> Int
 hs = length . (filter (\x -> head x == 'h'))
 
---avgLength :: [a] -> Float 
+--avgLength :: [a] -> Float
 avgLength [] = 0
 avgLength (x:xs) = fromIntegral (sum (lengths (x:xs))) / fromIntegral (length (x:xs))
 -- avgLength = foldr (\x -> (sum (lengths x)) / (length (x))) 0
@@ -61,7 +61,9 @@ diffAdj (x:xs) = filter (\(x,y) -> (x-y) `mod` 2 == 0) (adjacent (x:xs))
 
 remDups [] = []
 remDups [a] = [a]
-remDups (x:xs) = if x == head xs then remDups xs else x:(remDups xs)
+remDups (x:xs) = if x == head xs
+                    then remDups xs
+                    else x:(remDups xs)
 
 -- primes n =  VER COMO IMPORTAR PHI DE LA GUIA 4
 
@@ -74,7 +76,7 @@ f = foldr (:) []
 = definición de f
     foldr (:) [] [1]
 = definición de foldr-2
-    (:) 1 (foldr (:) [] []) 
+    (:) 1 (foldr (:) [] [])
 = definición de foldr-1
     (:) 1 []
 = reescritura infija de (:)
@@ -97,7 +99,7 @@ dropwhile f (x:xs) = if f x then dropwhile f xs else (x:xs)
 -- 6) TODO
 -- ffreshIndex :: [Lt] -> Int
 
-{- 
+{-
 7.a)
     map f (xs ++ ys) = map f xs ++ map f ys
 
@@ -114,7 +116,7 @@ Caso base: xs = []
     map f ys                (B)
 
     (A) = (B)   ✓
-    
+
 Caso inductivo:
 ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 Tesis inductiva: xs = z:zs
@@ -223,7 +225,7 @@ Demostración:
 = definción de (++).2
     filter p (z :(zs ++ ys))
 
-Subcaso f x = True: 
+Subcaso f x = True:
 ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 = definición de filter.2
     z:(filter p (zs ++ ys))
@@ -234,7 +236,7 @@ Subcaso f x = True:
 = definición de filter.2
     filter p (z:zs) ++ filter p ys  ✓
 
-Subcaso f x = False: 
+Subcaso f x = False:
 ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 = definición de filter.2
     filter p (zs ++ ys)
@@ -273,7 +275,7 @@ Caso base: xs = []
     []                          (B)
 
     (A) = (B)   ✓
-     
+
 Caso inductivo:
 ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 Tesis inductiva: xs = ys:yss
@@ -307,7 +309,7 @@ Demostración:
     ((f x): (map f ys)) : ((map ((f x):) . map (map f)) yss)
 = definición de map.2
     (map f (x:ys)):((map ((f x):) . map (map f)) yss)       (B)
-  
+
     (A) = (B)   ✓
                     ∎
 7.e)
@@ -334,7 +336,7 @@ Caso base: xss = []
     []
 
     (A) = (B)   ✓
-    
+
 Caso inductivo:
 ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 Tesis inductiva: xss = (yss:ysss)
@@ -350,7 +352,7 @@ Demostración:
     concat (map concat (yss:ysss))
 = definición de map.2
     concat (concat yss : map concat ysss)
-= definición de concat.2 
+= definición de concat.2
     concat yss ++ concat (map concat ysss)
 = definición de composición
     concat yss ++ ((concat . map concat) ysss)
@@ -360,18 +362,18 @@ Demostración:
     concat yss ++ concat (concat ysss)
 = definición de concat.2
     concat (concat yss : concat ysss)
-= 
---------------------------------------------      
---      TODO 
+=
+--------------------------------------------
+--      TODO
 --      TERMINAR !!!
 --      concat (concat (yss:ysss))
---      
+--
 --      concat (yss ++ concat ysss)
 --
 --
 --
 -- concat xs:xss = xs ++ concat xss
----------------------------------------------    
+---------------------------------------------
 
 8)
 insert y [] = []
@@ -586,7 +588,7 @@ Caso inductivo:
 ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 Tesis inductiva: xs = (y:ys)
 ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-    (filter p . map f) (y:ys) = (map f . filter (p . f)) (y:ys) 
+    (filter p . map f) (y:ys) = (map f . filter (p . f)) (y:ys)
 
 Hipótesis inductiva: (filter p . map f) ys = (map f . filter (p . f)) ys
 ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
@@ -612,7 +614,7 @@ Subcaso p (f y) = True:
     map f ((p . f) y : filter (p . f) ys)
 = condición del subcaso y definción de filter.2
     map f (filter (p . f) (y:ys))   ✓
-    
+
 Subcaso p (f y) = False:
 ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 = definición de filter.2
@@ -629,7 +631,7 @@ Subcaso p (f y) = False:
     map f (filter (p . f) ys)
 = definición de composición
     (map f . filter (p . f)) ys         (B)
-    
+
     (A) = (B)   ✓
                         ∎
 
@@ -671,7 +673,7 @@ Subcaso p y = True:
     y : (takewhile f ys ++ dropwhile p ys)
 = hipótesis inductiva
     y:ys        ✓
-    
+
 Subcaso p y = False:
 ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
     takewhile p (y:ys) ++ dropwhile p (y:ys)

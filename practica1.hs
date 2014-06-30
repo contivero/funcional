@@ -52,7 +52,7 @@ swap (x,y) = (y,x)
 -- f1 x = let (y,z) = (x,x) in y
 f1 x = x
 
-greaterThan (x,y) | x > y = True
+greaterThan (x,y) | x > y     = True
                   | otherwise = False
 
 -- Funcion a reescribir:
@@ -63,7 +63,8 @@ f2 (x,y) = x
 -- Redefinir:
 --    power4 x = let sqr y = y*y in sqr (sqr x)
 power4 x = x*x*x*x
-power4' x = (sqr x)*(sqr x) where sqr x = x*x
+power4' x = (sqr x)*(sqr x)
+  where sqr x = x*x
 
 -- 4)
 fib 0 = 1
@@ -79,7 +80,8 @@ fib n = fib (n-1) + fib (n-2)
 -- 6) Funciones como valores y la aplicación parcial son las principales.
 
 sauronico x | mod x 400 == 0 = True
-            | otherwise = let a = mod x 100 in (mod a 4 == 0) && a /= 0
+            | otherwise      = let a = mod x 100
+                                in (mod a 4 == 0) && a /= 0
 
 sort3 x y z | x < y && y < z = (x, y, z)
             | x < z && z < y = (x, z, y)
@@ -94,8 +96,8 @@ sort3' x y z = insert x (sort2 y z)
       | a <= b = (a,b,c)
       | a >= c = (b,c,a)
       | otherwise = (b,a,c)
-    sort2 d e = if e <= d 
-                   then (e,d) 
+    sort2 d e = if e <= d
+                   then (e,d)
                    else (d,e)
 
 sort3'' x y z = if x < y

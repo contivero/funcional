@@ -4,14 +4,14 @@ belongs a (x:xs) = a == x || belongs a xs
 
 union xs [] = xs
 union [] xs = xs
-union (x:xs) l = if belongs x l 
-                    then union xs l 
+union (x:xs) l = if belongs x l
+                    then union xs l
                     else union xs (x:l)
 
 intersection xs [] = []
 intersection [] xs = []
-intersection (x:xs) l = if belongs x l 
-                           then intersection xs (x:l) 
+intersection (x:xs) l = if belongs x l
+                           then intersection xs (x:l)
                            else intersection xs l
 
 -- 2)
@@ -86,11 +86,11 @@ seq2List (Unit a) = [a]
 seq2List (Cat a b) = seq2List a ++ seq2List b
 
 -- 5.a)
-data Form = Atom 
+data Form = Atom
           | Or Form Form
           | Implies Form Form
-          | Forall Var Form 
-          | Not Form 
+          | Forall Var Form
+          | Not Form
           | And Form Form
           | Iff Form Form
           | Exists Var Form
@@ -107,7 +107,7 @@ normalize (Iff p q) = Not (Not (Or (Or (Not (normalize p) (normalize q)))
 normalize (Exists a p) = Exists a (normalize p)
 
 -- 5.b)
-data FN = AtomN 
+data FN = AtomN
         | NotN FN
         | OrN FN FN
         | ExistsN Var FN

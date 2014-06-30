@@ -37,23 +37,23 @@ lengths (xs:xss) = length xs : lengths xss
 
 order [] = []
 order ((x,y):xs) = if x < 3*y 
-                   then (x,y): order xs 
-                   else order xs
+                      then (x,y): order xs 
+                      else order xs
 
 pairs [] = []
 pairs (x:xs) = if x `mod` 2 == 0 
-               then x : pairs xs
-               else pairs xs
+                  then x : pairs xs
+                  else pairs xs
 
 chars [] = []
 chars (x:xs) = if isAlpha x 
-               then x : chars xs 
-               else chars xs
+                  then x : chars xs 
+                  else chars xs
 
 moreThan _ [] = []
 moreThan n (xs:xss) = if length xs > n 
-                      then xs : moreThan n xss 
-                      else moreThan n xss
+                         then xs : moreThan n xss 
+                         else moreThan n xss
 
 -- 3) TODO
 
@@ -252,7 +252,9 @@ snd_Lam = \x -> x false_Lam
 -- 9)
 -- b)
 oddsIn [] = []
-oddsIn (x:xs) = if x `mod` 2 == 1 then x : oddsIn xs else oddsIn xs
+oddsIn (x:xs) = if x `mod` 2 == 1 
+                   then x : oddsIn xs
+                   else oddsIn xs
 
 -- 10) TODO: completar
 data DigBin = Cero | Uno

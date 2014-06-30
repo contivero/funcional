@@ -1,6 +1,5 @@
 import Data.Char (ord, isAlpha) -- Usado para "codes" y "chars" del ejercicio 1
 {-
-import practica4 (phi)
 Recordar !
 filter :: (a -> Bool) -> [a] -> [a]
 filter f [] = []
@@ -45,8 +44,7 @@ moreThan n = filter (\xs -> length xs > n)
 
 pal :: Eq a => [a] -> Bool
 pal = reverse >>= (==) -- TODO: Magia monádica, ver bien que hace!
--- TODO pq esta definición con foldr esta mal?
--- pal = foldr ((&&) . (\x -> x == (reverse (tail xs))))) True
+
 hs :: [[Char]] -> Int
 hs = length . (filter (\x -> head x == 'h'))
 
@@ -81,7 +79,7 @@ f = foldr (:) []
     (:) 1 []
 = reescritura infija de (:)
     1:[]
-= syntactic sugar :>
+= syntactic sugar
     [1]
 -}
 f' (x:xs) = (x:xs)
@@ -117,14 +115,14 @@ Caso base: xs = []
 
     (A) = (B)   ✓
     
-Hipótesis inductiva: zs
-‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-    map f (zs ++ ys) = map f zs ++ map f ys
-
+Caso inductivo:
+‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 Tesis inductiva: xs = z:zs
 ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
     map f ((z:zs) ++ ys) = map f (z:zs) ++ map f ys
 
+Hipótesis inductiva: map f (zs ++ ys) = map f zs ++ map f ys
+‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 Demostración:
 ‾‾‾‾‾‾‾‾‾‾‾‾‾
     map f ((z:zs) ++ ys)
@@ -165,14 +163,14 @@ Caso base: xss = []
 
     (A) = (B)   ✓
 
-Hipótesis inductiva: yss (cola de xss)
-‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-    (map f . concat) yss = (concat . map (map f)) yss
-
+Caso inductivo:
+‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 Tesis inductiva: xss = ys:yss
 ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
     (map f . concat) (ys:yss) = (concat . map (map f)) (ys:yss)
 
+Hipótesis inductiva: (map f . concat) yss = (concat . map (map f)) yss
+‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 Demostración:
 ‾‾‾‾‾‾‾‾‾‾‾‾‾
     (map f . concat) (ys:yss)
@@ -211,14 +209,14 @@ Caso base: xs = []
 
     (A) = (B)   ✓
 
-Hipótesis inductiva: zs (cola de xs)
-‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-    filter p (zs ++ ys) = filter p zs ++ filter p ys
-
+Caso inductivo:
+‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 Tesis inductiva: xs = z:zs
 ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
     filter p ((z:zs) ++ ys) = filter p (z:zs) ++ filter p ys
 
+Hipótesis inductiva: filter p (zs ++ ys) = filter p zs ++ filter p ys
+‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 Demostración:
 ‾‾‾‾‾‾‾‾‾‾‾‾‾
     filter p ((z:zs) ++ ys)
@@ -278,14 +276,12 @@ Caso base: xs = []
      
 Caso inductivo:
 ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-Hipótesis inductiva: yss (cola de xs)
-‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-    (map (map f) . map (x:)) yss = (map ((f x):) . map (map f)) yss
-
 Tesis inductiva: xs = ys:yss
 ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
     (map (map f) . map (x:)) (ys:yss) = (map ((f x):)) . map (map f)) (ys:yss)
 
+Hipótesis inductiva: (map (map f) . map (x:)) yss = (map ((f x):) . map (map f)) yss
+‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 Demostración:
 ‾‾‾‾‾‾‾‾‾‾‾‾‾
     (map (map f) . map (x:)) (ys:yss)
@@ -339,14 +335,14 @@ Caso base: xss = []
 
     (A) = (B)   ✓
     
-Hipótesis inductiva: ysss (cola de xss)
-‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-    (concat . map concat) ysss = (concat . concat) ysss
-
+Caso inductivo:
+‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 Tesis inductiva: xss = (yss:ysss)
 ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
     (concat . map concat) (yss:ysss) = (concat . concat) (yss:ysss)
 
+Hipótesis inductiva: (concat . map concat) ysss = (concat . concat) ysss
+‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 Demostración:
 ‾‾‾‾‾‾‾‾‾‾‾‾‾
     (concat . map concat) (yss:ysss)
@@ -420,14 +416,14 @@ Caso base: xs = []
 
     (A) = (B)   ✓
 
-Hipótesis inductiva: yss (cola de xs)
-‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-    (inits . map f) yss = (map (map f) . inits) yss
-
+Caso inductivo:
+‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 Tesis inductiva: xs = (ys:yss)
 ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
     (inits . map f) (ys:yss) = (map (map f) . inits) (ys:yss)
 
+Hipótesis inductiva: (inits . map f) yss = (map (map f) . inits) yss
+‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 Demostración:
 ‾‾‾‾‾‾‾‾‾‾‾‾‾
     (inits . map f) (ys:yss)
@@ -495,14 +491,14 @@ Caso base: xs = []
 
     (A) = (B)   ✓
 
-Hipótesis inductiva: yss (cola de xs)
-‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-    map (f . g) yss = (map f . map g) yss
-
+Caso inductivo:
+‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 Tesis inductiva: xs = (ys:yss)
 ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
     map (f . g) (ys:yss) = (map f . map g) (ys:yss)
 
+Hipótesis inductiva: map (f . g) yss = (map f . map g) yss
+‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 Demostración:
 ‾‾‾‾‾‾‾‾‾‾‾‾‾
     map (f . g) (ys:yss)
@@ -541,10 +537,10 @@ Caso base: xs = []
 
     (A) = (B)   ✓
 
-Hipótesis inductiva: ys (cola de xs)
+Caso inductivo:
+‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+Hipótesis inductiva: (filter p . filter q) ys = (filter r where r x = p x && q x) ys
 ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-    (filter p . filter q) ys = (filter r where r x = p x && q x) ys
-
 Tesis inductiva: xs = (y:ys)
 ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
     (filter p . filter q) (y:ys) = (filter r where r x = p x && q x) (y:ys)
@@ -556,4 +552,134 @@ Demostración:
     filter p (filter q (y:ys))
 = definición de filter.2
     filter p (q y : filter q ys)
+
+    ******TERMINAR*****
+    ******TERMINAR*****
+    ******TERMINAR*****
+
+10.c)
+    filter p . map f = map f . filter (p . f)
+= principio de extensionalidad
+    (filter p . map f) xs = (map f . filter (p . f)) xs
+
+Caso base: xs = []
+‾‾‾‾‾‾‾‾‾‾
+    (filter p . map f) []
+= definición de composoción
+    filter p (map f [])
+= definición de map.1
+    filter p []
+= definición de map.1
+    []                              (A)
+
+    (map f . filter (p . f)) []
+= definición de composición
+    map f (filter (p . f) [])
+= definición de filter.1
+    map f []
+= definición de map.1
+    []                              (B)
+
+    (A) = (B)   ✓
+
+Caso inductivo:
+‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+Tesis inductiva: xs = (y:ys)
+‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+    (filter p . map f) (y:ys) = (map f . filter (p . f)) (y:ys) 
+
+Hipótesis inductiva: (filter p . map f) ys = (map f . filter (p . f)) ys
+‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+Demostración:
+‾‾‾‾‾‾‾‾‾‾‾‾‾
+    (filter p . map f) (y:ys)
+= definición de composición
+    filter p (map f (y:ys))
+= definición de map.2
+    filter p (f y : map f ys)
+
+Subcaso p (f y) = True:
+‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+= definición de filter.2
+    p (f y) : filter p (map f ys)
+= definición decomposición
+    p (f y) : (filter p . map f) ys
+= hipótesis inductiva
+    p (f y) : (map f . filter (p . f)) ys
+= definición de composición (2 veces)
+    (p .f) y : map f (filter (p . f) ys)
+= definición de map.2
+    map f ((p . f) y : filter (p . f) ys)
+= condición del subcaso y definción de filter.2
+    map f (filter (p . f) (y:ys))   ✓
+    
+Subcaso p (f y) = False:
+‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+= definición de filter.2
+    filter p (map f ys)
+= definición de composición
+    (filter p . map f) ys
+= hipótesis inductiva
+    (map f . filter (p . f)) ys         (A)
+
+    (map f . filter (p . f)) (y:ys)
+= definición de composición
+    (map f (filter (p . f) (y:ys)))
+= condición del subcaso y definición de filter.1
+    map f (filter (p . f) ys)
+= definición de composición
+    (map f . filter (p . f)) ys         (B)
+    
+    (A) = (B)   ✓
+                        ∎
+
+
+10.d)
+Demostrar:
+    takewhile p xs ++ dropbwhile p xs = xs
+
+Demostramos por inducción en la estructura de la lista xs:
+
+Caso base: xs = []
+‾‾‾‾‾‾‾‾‾‾
+    takewhile p [] ++ dropwhile p []
+= definición de takewhile.1
+    [] ++ dropwhile p []
+= definición de (++).1
+    dropwhile p []
+= definición de dropwhile.1
+    []          ✓
+
+Caso inductivo:
+‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+Hipótesis inductiva: takewhile p ys ++ dropbwhile p ys = ys
+‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+Tesis inductiva: xs = (y:ys)
+‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+    takewhile p (y:ys) ++ dropwhile p (y:ys) = (y:ys)
+
+Demostración:
+‾‾‾‾‾‾‾‾‾‾‾‾‾
+Subcaso p y = True:
+‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+    takewhile p (y:ys) ++ dropwhile p (y:ys)
+= condición del subcaso y definición de takewhile.2
+    (y:(takewhile f ys)) ++ dropwhile p (y:ys)
+= condición del subcaso y definición de dropwhile.2
+    (y:(takewhile f ys)) ++ dropwhile p ys
+= definición de (++).2
+    y : (takewhile f ys ++ dropwhile p ys)
+= hipótesis inductiva
+    y:ys        ✓
+    
+Subcaso p y = False:
+‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+    takewhile p (y:ys) ++ dropwhile p (y:ys)
+= condición del subcaso y definición de takewhile.2
+    [] ++ dropwhile p (y:ys)
+= definición de (++).1
+    dropwhile p (y:ys)
+= condición del subcaso y definición de dropwhile.2
+    y:ys        ✓
+                        ∎
 -}

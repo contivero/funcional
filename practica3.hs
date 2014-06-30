@@ -18,24 +18,26 @@ import Data.Char
 4_
 5_
 6_
--}
 
-{-
-2)
-"In Haskell, all functions are considered curried: That is, all functions
-in Haskell take just single arguments."
-Fuente: www.haskell.org/haskellwiki/Currying
+2) "In Haskell, all functions are considered curried: That is, all functions
+   in Haskell take just single arguments."
+   Fuente: www.haskell.org/haskellwiki/Currying
+   
+   De todas formas, depende de como uno lo interprete!
 
 a_ Es de alto orden porque recibe una función.
-   fUno es igual a la función curry de Haskell (aunque de tipo
-   Int -> Int).
-b_ Es de alto orden porque recibe una función.
-c_ 1_ No es de alto orden ya que no recibe ni retorna una función.
-   2_ Se sigue comportando igual, pero aumento la expresividad 
+   fUno es igual a la función curry de Haskell (aunque más restrictiva,
+   de tipo Int -> Int). Esta currificada.
+b_ Es de alto orden porque recibe una función. Esta currificada.
+c.1_ No es de alto orden ya que no recibe ni retorna una función.
+     Si está o no currificada depende de la interpretación. Técnicamente
+     recibe una terna, desde ese punto de vista si, pero si uno lo toma 
+     como que recibe tres valores de tipo Char, hace algo con eso y retorna
+     Bool, entonces no.
+ .2_ Se sigue comportando igual, pero aumentó la expresividad. En este
+     caso si esta currificada, ya que no se considera que forma a la persona
+     (tipo Pers), sino que fTres recibe algo de tipo Pers.
 -}
-type Pers = (Char, Char, Char)
-fTres :: Pers -> Bool
-fTres (c1, c2, c3) = c1 == c2 && c2 == c3
 
 -- 3) Tomemos x = 5, y supongamos la siguiente definición de ## solo 
 --    para probar. Entonces ej3 = (##5)
@@ -113,6 +115,7 @@ h x y = f (g x y) ==> h x y = (f.(g x))y   Por definición de composición
                   ==> h x = f . (g x)      Por extensionalidad
 -}
 
+-- 11)
 -- Recordar de la práctica 2 la función compose:
 compose :: (a -> b) -> (c -> a) -> c -> b
 compose f g = (\x -> f(g x))

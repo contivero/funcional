@@ -5,14 +5,14 @@ belongs a (x:xs) = a == x || belongs a xs
 union xs [] = xs
 union [] xs = xs
 union (x:xs) l = if belongs x l 
-                      then union xs l 
-                      else union xs (x:l)
+                    then union xs l 
+                    else union xs (x:l)
 
 intersection xs [] = []
 intersection [] xs = []
 intersection (x:xs) l = if belongs x l 
-                             then intersection xs (x:l) 
-                             else intersection xs l
+                           then intersection xs (x:l) 
+                           else intersection xs l
 
 -- 2)
 data TipTree a = Tip a | Join (TipTree a) (TipTree a)
@@ -29,7 +29,7 @@ nodes :: TipTree a -> Int
 nodes (Tip a) = 0
 nodes (Join a b) = 1 + nodes a + nodes b
 
-walkover :: TipTree a -> [Tip a]
+walkover :: TipTree a -> [TipTree a]
 walkover (Tip a) = [Tip a]
 walkover (Join a b) = walkover a ++ walkover b
 
@@ -37,7 +37,7 @@ mirrorTip :: TipTree a -> TipTree a
 mirrorTip (Tip a) = Tip a
 mirrorTip (Join a b) = Join (mirrorTip b) (mirrorTip a)
 
-mapTip :: (a -> a) -> Tiptree a -> TipTree a
+mapTip :: (a -> a) -> TipTree a -> TipTree a
 mapTip f (Tip a) = Tip (f a)
 mapTip f (Join a b) = Join (mapTip f a) (mapTip f b)
 
@@ -102,7 +102,8 @@ normalize (Implies p q) = Or (Not (normalize p)) (normalize q)
 normalize (Forall a p) = Not (Exists a (Not (normalize p)))
 normalize (Not p) = Not (normalize p)
 normalize (And p q) = Not (Or (Not normalize p) (Not normalize q))
-normalize (Iff p q) = Not (Not (Or (Or (Not (normalize p) (normalize q))) (Or (Not normalize q) (normalize p))))
+normalize (Iff p q) = Not (Not (Or (Or (Not (normalize p) (normalize q)))
+                          (Or (Not normalize q) (normalize p))))
 normalize (Exists a p) = Exists a (normalize p)
 
 -- 5.b)

@@ -1,30 +1,45 @@
 -- Ejercicio 1)
--- a_ Cualquier cosa que se evalue como true y false
--- True
--- False
--- b_ Funcion swap evaluada en una tupla
--- c)
+-- a_ Cualquier cosa que se evalue como true y false, por ejemplo:
+--    True
+--    False
+-- b_ (1,1)
+--    swap (4,3)
+-- c) constant
 constant :: Char -> Int
 constant x = 10
--- d)
+-- d) alwaysTrue, y alwaysFalse:
 alwaysTrue :: (Int, Char) -> Bool
 alwaysTrue (x,y) = True
+
 alwaysFalse :: (Int, Char) -> Bool
 alwaysFalse (x,y) = False 
--- e)
+-- e) mapping, mapping2
 mapping :: (Int -> Int) -> Int
 mapping x = 10
--- f)
+
+mapping2 :: (Int -> Int) -> Int
+mapping2 f = f 10
+-- f) func, func2
 func :: (Bool -> Bool, Int) -> (Bool -> Bool, Int)
 func (x,y) = (x,y)
--- g) 
+
+func2 :: (Bool -> Bool, Int) -> (Bool -> Bool, Int)
+func2 (f,g) = (f, g*10)
+-- g) mapToBool y mapToBool2
 mapToBool :: a -> Bool
 mapToBool x = True
-mapToBool' x = False
--- h)
+
+mapToBool2 :: a -> Bool
+mapToBool2 x = False
+-- h) identity (no hay otra función total de tipo a -> a)
 identity :: a -> a
 identity x = x
--- 3)
+-- bottom
+-- \c -> bottom
+
+-- 2) Permite realizar chequeos en tiempo de compilación, previniendo bugs.
+
+-- 3) Hecho en la resolución de la práctica 1
 
 -- 4)
 first :: (a, b) -> a
@@ -35,7 +50,6 @@ second (x,y) = y
 
 const :: a -> b -> a
 const x y = x
-
 
 compose :: (a -> b) -> (c -> a) -> c -> b
 compose f g = (\x -> f(g x))
@@ -69,6 +83,8 @@ f_ Mal formada, necesito separar ambos con &&
 -}
 
 -- 7)
+
+-- 8)
 data ColorPrimario = Azul | Rojo | Amarillo deriving (Eq, Show)
 data ColorSecundario = Color' ColorPrimario ColorPrimario deriving (Eq, Show)
 
@@ -96,7 +112,7 @@ suma (Punto x1 y1) (Punto x2 y2) = Punto (x1+x2) (y1+y2)
 data Punto3D = Punto3D Float Float Float deriving (Eq, Show)
 
 modulo' :: Punto3D -> Float
-modulo' (Punto3D x y z) = sqrt $ x^2 + y^2 + z^2
+modulo' (Punto3D x y z) = sqrt (x^2 + y^2 + z^2)
 
 distanciaA' :: Punto3D -> Punto3D -> Float
 (Punto3D x1 y1 z1) `distanciaA'` (Punto3D x2 y2 z2) = sqrt $ (x1 - x2)^2 + (y1 - y2)^2 + (z1 - z2)^2
@@ -131,7 +147,14 @@ mover (Rectangulo (Punto x1 y1) (Punto x2 y2)) (Punto a b) =
 --                Elipsoide
 
 {-
-9) TODO 
+9)
+a_ error "bottom :)"
+b_ f :: Int -> a
+   f x = x + f x
+c_ g :: a -> b
+   g x = error "failure"
+d_ h :: c -> c
+   h x = error "error"
 
 10) 
 Ejercicio 1.6.3 del "Introduction to Functional Programming using Haskell"
@@ -142,16 +165,17 @@ Supongamos que x :: A -> B; x se aplica a x, por lo que tendría que ser
 A = A -> B, pero no existe tal tipo A que pueda cumplir con ello.
 -}
 
+-- 11)
 smaller (x,y,z) | x <= y && x <= z = x
                 | y <= x && y <= z = y
                 | z <= x && z <= y = z
 
--- smaller' = \x y z -> case () of 
---                        _ | x <= y && x <= z -> x
---                          | y <= x && y <= z -> y
---                          | z <= x && z <= y -> z
 smaller' :: (Ord a) => (a,a,a) -> a
-smaller' = \(x, y, z) -> if x <= y && x <= z then x else if y <= x && y <= z then y else z
+smaller' = \(x, y, z) -> if x <= y && x <= z 
+                            then x 
+                            else if y <= x && y <= z 
+                                    then y 
+                                    else z
 
 -- El x a izquierda del = no es el mismo del x a la derecha. El scope es distinto.
 scnd :: a -> b -> b
@@ -165,12 +189,19 @@ andThen True y = y
 andThen False y = False
 
 andThen' :: Bool -> Bool -> Bool  
-andThen' = \x -> \y -> if x == True then y else False
+andThen' = \x -> \y -> if x == True 
+                          then y 
+                          else False
 
+-- 12)
 iff :: Bool -> Bool -> Bool
-iff = \x -> \y -> if x then not y else y
+iff = \x -> \y -> if x 
+                     then not y 
+                     else y
 iff' :: Bool -> Bool -> Bool
-iff' x y = if x then not y else y
+iff' x y = if x 
+              then not y 
+              else y
 
 -- Notar el scope de las variables! La primera x es distinta a la 2da y 3ra,
 -- que entre ellas son iguales
@@ -180,9 +211,10 @@ alpha = \x -> \x -> x
 alpha' :: a -> b -> b
 alpha' x y = y
 
+-- 13)
 bhaskara :: Floating a => (a,a,a) -> (a,a)
 bhaskara (a,b,c) = (-b + aux , -b - aux) 
-    where aux = (sqrt $ b^2 - (4*a*c))/(2*a)
+  where aux = (sqrt $ b^2 - (4*a*c))/(2*a)
 
 {-
 14)

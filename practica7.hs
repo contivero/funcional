@@ -43,7 +43,7 @@ moreThan n = filter (\xs -> length xs > n)
 -- 2) TODO ver si estan todos bien !
 
 pal :: Eq a => [a] -> Bool
-pal = reverse >>= (==) -- TODO: Magia monádica, ver bien que hace!
+--pal = reverse >>= (==) -- TODO: Magia monádica, ver bien que hace!
 
 hs :: [[Char]] -> Int
 hs = length . (filter (\x -> head x == 'h'))

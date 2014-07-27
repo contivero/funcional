@@ -85,14 +85,21 @@ f_ Mal formada, necesito separar ambos con &&
 -- 7)
 
 -- 8)
-data ColorPrimario = Azul | Rojo | Amarillo deriving (Eq, Show)
-data ColorSecundario = Color' ColorPrimario ColorPrimario deriving (Eq, Show)
+data ColorPrimario = Azul |
+                     Rojo |
+                     Amarillo
+  deriving (Eq, Show)
+
+data ColorSecundario = Color' ColorPrimario ColorPrimario
+  deriving (Eq, Show)
 
 mezclar :: ColorPrimario -> ColorPrimario -> ColorSecundario
-mezclar x y | x == y = error "No mezclar el mismo color"
-mezclar x y = Color' x y
+mezclar x y = if x == y
+                 then error "No mezclar el mismo color"
+                 else Color' x y
 
-data Punto = Punto Float Float deriving (Eq, Show)
+data Punto = Punto Float Float
+  deriving (Eq, Show)
 
 modulo :: Punto -> Float
 modulo (Punto x y) = sqrt $ x^2 + y^2
@@ -109,13 +116,15 @@ ycoord (Punto x y) = y
 suma :: Punto -> Punto -> Punto
 suma (Punto x1 y1) (Punto x2 y2) = Punto (x1+x2) (y1+y2)
 
-data Punto3D = Punto3D Float Float Float deriving (Eq, Show)
+data Punto3D = Punto3D Float Float Float
+  deriving (Eq, Show)
 
 modulo' :: Punto3D -> Float
 modulo' (Punto3D x y z) = sqrt (x^2 + y^2 + z^2)
 
 distanciaA' :: Punto3D -> Punto3D -> Float
-(Punto3D x1 y1 z1) `distanciaA'` (Punto3D x2 y2 z2) = sqrt $ (x1 - x2)^2 + (y1 - y2)^2 + (z1 - z2)^2
+(Punto3D x1 y1 z1) `distanciaA'` (Punto3D x2 y2 z2) =
+  sqrt $ (x1 - x2)^2 + (y1 - y2)^2 + (z1 - z2)^2
 
 xcoord' :: Punto3D -> Float
 xcoord' (Punto3D x y z) = x
@@ -126,7 +135,9 @@ ycoord' (Punto3D x y z) = y
 suma' :: Punto3D -> Punto3D -> Punto3D
 suma' (Punto3D x1 y1 z1) (Punto3D x2 y2 z2) = Punto3D (x1+x2) (y1+y2) (z1+z2)
 
-data Figura = Circulo Punto Float | Rectangulo Punto Punto deriving (Eq, Show)
+data Figura = Circulo Punto Float |
+              Rectangulo Punto Punto
+  deriving Show
 
 area :: Figura -> Float
 area (Circulo _ r) = pi*r^2
@@ -143,12 +154,26 @@ mover (Circulo (Punto x y) r) (Punto a b) = Circulo (Punto (x+a) (y+b)) r
 mover (Rectangulo (Punto x1 y1) (Punto x2 y2)) (Punto a b) =
         Rectangulo (Punto (x1+a) (y1+b)) (Punto (x2+a) (y2+b))
 
---data Figura3D = Esfera Punto3D Float | Cubo Punto3D  Punto3D  Punto3D  Punto3D |
---                Elipsoide
+data Figura3D = Esfera Punto3D Float |
+                Cubo Punto3D  Punto3D  Punto3D  Punto3D |
+                Cilindro Punto3D Float Float
+  deriving Show
+
+area' :: Figura3D -> Float
+area' (Esfera _ r)     = 4*pi*r^2
+area' (Cilindro _ h r) = 2*pi*r*(r + h)
+area' (Cubo _ _ a b)   = 6 * arista^2
+  where arista = a `distanciaA'` b
+
+volumen' :: Figura3D -> Float
+volumen' (Esfera _ r)      = (4/3) * pi * r^3
+volumen' (Cilindro _ h r)  = pi*(r^2)*h
+volumen' (Cubo _ _ a b)    = arista^3
+  where arista = a `distanciaA'` b
 
 {-
 9)
-a_ error "bottom :)"
+a_ error "bottom"
 b_ f :: Int -> a
    f x = x + f x
 c_ g :: a -> b
@@ -213,7 +238,7 @@ alpha' x y = y
 
 -- 13)
 bhaskara :: Floating a => (a,a,a) -> (a,a)
-bhaskara (a,b,c) = (-b + aux , -b - aux)
+bhaskara (a,b,c) = (-b + aux, -b - aux)
   where aux = (sqrt $ b^2 - (4*a*c))/(2*a)
 
 {-

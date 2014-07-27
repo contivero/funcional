@@ -14,46 +14,46 @@ k_ Válido, []:[] equivale a [[]]
 -}
 
 -- 2)
-sum' [] = 0
 sum' (x:xs) = x + sum xs
+sum' [] = 0
 
-any' [] = False
 any' (x:xs) = x || any' xs
+any' [] = False
 
-all' [] = True
 all' (x:xs) = x && all' xs
+all' [] = True
 
-codes [] = []
 codes (x:xs) = ord x : codes xs
+codes [] = []
 
-remainders _ [] = []
 remainders n (x:xs) = x `mod` n : remainders n xs
+remainders _ [] = []
 
-squares [] = []
 squares (x:xs) = x*x : squares xs
+squares [] = []
 
-lengths [] = []
 lengths (xs:xss) = length xs : lengths xss
+lengths [] = []
 
-order [] = []
-order ((x,y):xs) = if x < 3*y 
-                      then (x,y): order xs 
+order ((x,y):xs) = if x < 3*y
+                      then (x,y): order xs
                       else order xs
+order [] = []
 
-pairs [] = []
-pairs (x:xs) = if x `mod` 2 == 0 
+pairs (x:xs) = if x `mod` 2 == 0
                   then x : pairs xs
                   else pairs xs
+pairs [] = []
 
-chars [] = []
-chars (x:xs) = if isAlpha x 
-                  then x : chars xs 
+chars (x:xs) = if isAlpha x
+                  then x : chars xs
                   else chars xs
+chars [] = []
 
-moreThan _ [] = []
-moreThan n (xs:xss) = if length xs > n 
-                         then xs : moreThan n xss 
+moreThan n (xs:xss) = if length xs > n
+                         then xs : moreThan n xss
                          else moreThan n xss
+moreThan _ [] = []
 
 -- 3) TODO
 
@@ -62,7 +62,7 @@ moreThan n (xs:xss) = if length xs > n
 -- b_
 
 {-
-5.a) 
+5.a)
     pairs . squares = squares . pairs
 = por principio de extensionalidad
     (pairs . squares) xs = (squares . pairs) xs
@@ -71,7 +71,7 @@ Demostración por inducción estructural en xs
 ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 Caso base: xs = []
 ‾‾‾‾‾‾‾‾‾‾
-    (pairs . squares) [] 
+    (pairs . squares) []
 = Por definición de composición (.)
     pairs(squares [])
 = Por squares-1
@@ -83,7 +83,7 @@ Caso base: xs = []
 = Por definición de composición
     squares(pairs [])
 = Por pairs-1
-    squares([]) 
+    squares([])
 = Por squares-1
     []              (B)
 
@@ -126,7 +126,7 @@ Subcaso y es par:
     y*y : (squares . pairs) ys      (B)
 
     (A) = (B)   ✓
-    
+
 Subcaso y es impar:
 ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
     (pairs . squares) (y:ys)
@@ -182,9 +182,9 @@ Caso base: xs = []
 
 Tesis inductiva: xs = y:ys
 ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-    sum (y:ys) ≤ length (y:ys) * maxl (y:ys) 
+    sum (y:ys) ≤ length (y:ys) * maxl (y:ys)
 
-Hipótesis inductiva: sum ys ≤ length ys * maxl ys 
+Hipótesis inductiva: sum ys ≤ length ys * maxl ys
 ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 Demostración:
 ‾‾‾‾‾‾‾‾‾‾‾‾‾
@@ -207,7 +207,7 @@ Subcaso y > maxl ys:
     (1 + length ys) * (y `max` maxl ys)
 = Por definición de max
     (1 + length ys) * y
-= Por distributividad del producto 
+= Por distributividad del producto
     y + length ys * y                   (B)
 
     (A) ≤ (B)   ✓
@@ -233,7 +233,7 @@ Para entender más, leer sobre 'Church booleans'.
 true_Lam = \x -> \y -> x
 false_Lam = \x -> \y -> y
 ifThenElse_Lam = \x -> x
--- Bajo esta definición, ifThenElse_Lam = \x -> \y -> \z -> x y z 
+-- Bajo esta definición, ifThenElse_Lam = \x -> \y -> \z -> x y z
 -- equivale a la dada!
 not_Lam = \x -> ifThenElse_Lam x false_Lam true_Lam
 
@@ -246,13 +246,13 @@ iff_Lam = \x -> \y -> or_Lam (and_Lam x y) (and_Lam (not_Lam x) (not_Lam y))
 
 -- 8)
 pair_Lam = \x -> \y -> \z -> ifThenElse_Lam z x y
-fst_Lam = \x -> x true_Lam 
+fst_Lam = \x -> x true_Lam
 snd_Lam = \x -> x false_Lam
 
 -- 9)
 -- b)
 oddsIn [] = []
-oddsIn (x:xs) = if x `mod` 2 == 1 
+oddsIn (x:xs) = if x `mod` 2 == 1
                    then x : oddsIn xs
                    else oddsIn xs
 
@@ -280,7 +280,7 @@ prod Uno Uno = Uno
 
 type NumBin = [DigBin]
 sumabin xs ys = sumabin' xs ys Cero
-sumabin' [] (x:xs) Cero = x:xs
-sumabin' [] (x:xs) Uno = suma x Uno : sumabin' [] xs (carry x Uno)
-sumabin' (x:xs) [] c = sumabin' [] (x:xs) c
 sumabin' (x:xs) (y:ys) c = suma (suma x y) c : sumabin' xs ys (snd(sumaCarry x y c))
+sumabin' (x:xs) [] c = sumabin' [] (x:xs) c
+sumabin' [] (x:xs) Uno = suma x Uno : sumabin' [] xs (carry x Uno)
+sumabin' [] (x:xs) Cero = x:xs

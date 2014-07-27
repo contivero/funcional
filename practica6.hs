@@ -1,6 +1,6 @@
 -- 1)
-belongs a [] = False
 belongs a (x:xs) = a == x || belongs a xs
+belongs a [] = False
 
 union xs [] = xs
 union [] xs = xs

@@ -105,8 +105,10 @@ undef x = 1 + undef x
 {-
 10) Ejercicio 1.4.1 del "Introduction to Functional Programming using Haskell"
 de Bird.
+
 h :: Integer -> Integer -> Integer
 . :: (a -> b) -> (c -> a) -> (c -> b)
+
 Por el tipo de la composicion (.), se ve que las afirmaciones a) y c)
 son invalidas (la entrada de f es de tipo Integer, mientras que la salida
 de g es de tipo (Integer -> Integer)).

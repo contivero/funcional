@@ -1,6 +1,8 @@
 -- 1)
 nextDiv :: Integer -> Integer -> Integer
-nextDiv x y = if y `mod` h == 0 then h else nextDiv h y
+nextDiv x y = if y `mod` h == 0 
+                 then h 
+                 else nextDiv h y
     where h = x + 1
 
 -- Suma divisores, tiene en cuenta el número en si y el 1!
@@ -30,7 +32,7 @@ mySum f i j = if i == j
 -- Usando la criba de eratóstenes para mayor eficiencia
 prime x = primeRec 2 x
   where primeRec a b = if a <= floor (sqrt (fromInteger b))
-                          then if (b `mod` a == 0)
+                          then if b `mod` a == 0
                                   then False
                                   else primeRec (a+1) b
                           else True

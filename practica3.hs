@@ -49,16 +49,19 @@ ej3 = \y -> y ## 5
 -- 5)
 twice :: (a -> a) -> a -> a
 twice f x = f (f x)
+
 twice' :: (a -> a) -> a -> a
 twice' = \f -> \x -> f (f x)
 
 myflip :: (a -> a -> b) -> a -> a -> b
 myflip f x y = f y x
+
 myflip' :: (a -> a -> b) -> a -> a -> b
 myflip' = \f -> \x -> \y -> f y x
 
 inc :: Integer -> Integer
 inc = (+1)
+
 inc' :: Integer -> Integer
 inc' = \x -> x+1
 
@@ -67,7 +70,7 @@ fix :: ((a -> b) -> a -> b) -> a -> b
 fix f x = f (fix f) x
 
 fork :: ((a -> b), (a -> c)) -> a -> (b,c)
-fork (f,g) x = (f x,g x)
+fork (f, g) x = (f x, g x)
 {-
 fork (fork, fork) (fork, fork)
 (fork (fork, fork), fork (fork, fork))
@@ -120,6 +123,6 @@ h x y = f (g x y) ==> h x y = (f.(g x))y   Por definición de composición
 -- 11)
 -- Recordar de la práctica 2 la función compose:
 compose :: (a -> b) -> (c -> a) -> c -> b
-compose f g = (\x -> f(g x))
+compose f g = (\x -> f (g x))
 
 sumDigit c x = compose (+x) digitToInt c

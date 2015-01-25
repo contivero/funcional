@@ -49,12 +49,12 @@ hs :: [[Char]] -> Int
 hs = length . (filter (\x -> head x == 'h'))
 
 --avgLength :: [a] -> Float
-avgLength [] = 0
+avgLength []     = 0
 avgLength (x:xs) = fromIntegral (sum (lengths (x:xs))) / fromIntegral (length (x:xs))
 -- avgLength = foldr (\x -> (sum (lengths x)) / (length (x))) 0
 
-adjacent [] = []
-adjacent [a] = []
+adjacent []       = []
+adjacent [_]      = []
 adjacent (x:y:zs) = (x,y) : adjacent (y:zs)
 
 diffAdj (x:xs) = filter (\(x,y) -> (x-y) `mod` 2 == 0) (adjacent (x:xs))
@@ -90,11 +90,15 @@ f' (x:xs) = (x:xs)
 -- TOOD TERMINAR !! : filter' f (x:xs) = if f x then concat (map )map f (x:xs)
 
 -- 5)
-takewhile _ [] = []
-takewhile f (x:xs) = if f x then x : (takewhile f xs) else []
+takewhile _ []     = []
+takewhile f (x:xs) = if f x 
+                        then x : (takewhile f xs) 
+                        else []
 
-dropwhile _ [] = []
-dropwhile f (x:xs) = if f x then dropwhile f xs else (x:xs)
+dropwhile _ []     = []
+dropwhile f (x:xs) = if f x 
+                        then dropwhile f xs 
+                        else (x:xs)
 
 -- 6) TODO
 -- ffreshIndex :: [Lt] -> Int
@@ -106,13 +110,13 @@ dropwhile f (x:xs) = if f x then dropwhile f xs else (x:xs)
 Caso base: xs = []
 ‾‾‾‾‾‾‾‾‾‾
     map f ([] ++ ys)
-= Por definición de (++).1
+= {++.1}
     map f ys                (A)
 
     map f [] ++ map f ys
-= definición de map.1
+= {map.1}
     [] ++ map f ys
-= definición de ++
+= {++.1}
     map f ys                (B)
 
     (A) = (B)   ✓
@@ -128,39 +132,39 @@ Hipótesis inductiva: map f (zs ++ ys) = map f zs ++ map f ys
 Demostración:
 ‾‾‾‾‾‾‾‾‾‾‾‾‾
     map f ((z:zs) ++ ys)
-= definición de ++
+= {++.2}
     map f (z:(zs ++ ys))
-= definición de map.2
+= {map.2}
     f z : (map f (zs ++ ys))
-= por hipótesis inductiva
+= {hipótesis inductiva}
     f z : (map f zs ++ map f ys)
-= definición de (++).2
+= {++.2}
     (f z : map f zs) ++ map f ys
-= definición de map.2
+= {map.2}
     map f (z:zs) ++ map f ys
                                   ∎
 
 7.b)
     map f . concat = concat . map (map f)
-= por principio de extensionalidad
+= {por principio de extensionalidad}
     (map f . concat) xss = (concat . map (map f)) xss
 
 Caso base: xss = []
 ‾‾‾‾‾‾‾‾‾‾
     (map f . concat) []
-= definición de composición
+= {definición de composición}
     (map f (concat []))
-= definción de concat.1
+= {concat.1}
     map f []
-= definición de map.1
+= {map.1}
     []                          (A)
 
     (concat . map (map f)) []
-= definición de composición
+= {definición de composición}
     (concat (map (map f) []))
-= definición de map.1
+= {map.1}
     concat []
-= definición de concat.1
+= {concat.1}
     []                          (B)
 
     (A) = (B)   ✓
@@ -176,23 +180,23 @@ Hipótesis inductiva: (map f . concat) yss = (concat . map (map f)) yss
 Demostración:
 ‾‾‾‾‾‾‾‾‾‾‾‾‾
     (map f . concat) (ys:yss)
-= definición de composición
+= {definición de composición}
     map f (concat (ys:yss))
-= definición de concat
+= {concat.2}
     map f (ys ++ concat yss)
-= propiedad demostrada en ej. 7.a)
+= {propiedad demostrada en ej. 7.a)}
     map f ys ++ map f (concat yss)
-= definición de composición
+= {definición de composición}
     map f ys ++ ((map f . concat) yss)
-= por hipótesis inductiva
+= {hipótesis inductiva}
     map f ys ++ ((concat . map (map f)) yss)
-= definición de composición
+= {definición de composición}
     map f ys ++ concat (map (map f) yss)
-= definición de concat.2
+= {concat.2}
     concat ((map f) ys : map (map f) yss)
-= definición de map.2
+= {map.2}
     concat (map (map f) (ys:yss))
-= definición de composición
+= {definición de composición}
     (concat . map (map f)) (ys:yss)
 
 7.c)
@@ -200,13 +204,13 @@ Demostración:
 Caso base: xs = []
 ‾‾‾‾‾‾‾‾‾‾
     filter p ([] ++ ys)
-= definición de (++).2
+= {++.2}
     filter p ys                 (A)
 
     filter p [] ++ filter p ys
-= definición de filter.1
+= {filter.1}
     [] ++ filter p ys
-= definición de (++).2
+= {++.2}
     filter p ys                 (B)
 
     (A) = (B)   ✓
@@ -222,30 +226,30 @@ Hipótesis inductiva: filter p (zs ++ ys) = filter p zs ++ filter p ys
 Demostración:
 ‾‾‾‾‾‾‾‾‾‾‾‾‾
     filter p ((z:zs) ++ ys)
-= definción de (++).2
+= {++.2}
     filter p (z :(zs ++ ys))
 
 Subcaso f x = True:
 ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-= definición de filter.2
+= {filter.2}
     z:(filter p (zs ++ ys))
-= por hipótesis inductiva
+= {hipótesis inductiva}
     z:(filter p zs ++ filter p ys)
-= definición de (++).2
+= {++.2}
     (z:(filter p zs)) ++ filter p ys
-= definición de filter.2
+= {filter.2}
     filter p (z:zs) ++ filter p ys  ✓
 
 Subcaso f x = False:
 ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-= definición de filter.2
+= {filter.2}
     filter p (zs ++ ys)
-= por hipótesis inductiva
+= {hipótesis inductiva}
     filter p zs ++ filter p ys      (A)
 
 Lado derecho:
     filter p (z:zs) ++ filter p ys
-= definición de filter.2
+= {filter.2}
     filter p zs ++ filter p ys      (B)
 
     (A) = (B)   ✓
@@ -253,25 +257,25 @@ Lado derecho:
 
 7.d)
     map (map f) . map (x:) = map ((f x):) . map (map f)
-= por principio de extensionalidad
+= {principio de extensionalidad}
     (map (map f) . map (x:)) xs = (map ((f x):)) . map (map f)) xs
 
 Caso base: xs = []
 ‾‾‾‾‾‾‾‾‾‾
     (map (map f) . map (x:)) []
-= definición de composición
+= {definición de composición}
     map (map f) (map (x:) [])
-= definición de map.1
+= {map.1}
     map (map f) []
-= definición de map.1
+= {map.1}
     []                          (A)
 
     (map ((f x):) . map (map f)) []
-= definición de composición
+= {definición de composición}
     map ((f x):) (map (map f) [])
-= definición de map.1
+= {map.1}
     map ((f x):) []
-= definición de map.1
+= {map.1}
     []                          (B)
 
     (A) = (B)   ✓
@@ -287,53 +291,53 @@ Hipótesis inductiva: (map (map f) . map (x:)) yss = (map ((f x):) . map (map f)
 Demostración:
 ‾‾‾‾‾‾‾‾‾‾‾‾‾
     (map (map f) . map (x:)) (ys:yss)
-= definición de composición
+= {definición de composición}
     map (map f) (map (x:) (ys:yss))
-= definición de map.2
+= {map.2}
     map (map f) ((x:ys):(map (x:) yss))
-= definición de map.2
+= {map.2}
     (map f (x:ys)) : (map (map f) (map (x:) yss))
-= definición de composición
+= {definición de composición}
     (map f (x:ys)): ( (map (map f) . map (x:)) yss )
-= por hipótesis inductiva
+= {hipótesis inductiva}
     (map f (x:ys)):((map ((f x):) . map (map f)) yss)       (A)
 
     (map ((f x):)) . map (map f)) (ys:yss)
-= definición de composición
+= {definición de composición}
     map ((f x):) (map (map f) (ys:yss))
-= definición de map.2
+= {map.2}
     map ((f x):) ((map f) ys : map (map f) yss)
-= definición de map.2
+= {map.2}
     ((f x):) (map f ys) : (map ((f x):) (map (map f) yss))
-= definición de composición
+= {definición de composición}
     ((f x): (map f ys)) : ((map ((f x):) . map (map f)) yss)
-= definición de map.2
+= {map.2}
     (map f (x:ys)):((map ((f x):) . map (map f)) yss)       (B)
 
     (A) = (B)   ✓
                     ∎
 7.e)
     concat . map concat = concat . concat
-= por principio de extensionalidad
+= {por principio de extensionalidad}
     (concat . map concat) xs = (concat . concat) xs
 
 Caso base: xss = []
 ‾‾‾‾‾‾‾‾‾‾
     (concat . map concat) []
-= definición de composición
+= {definición de composición}
     concat (map concat [])
-= definición de map.1
+= {map.1}
     concat []
-= definición de concat.1
+= {concat.1}
     []                  (A)
 
     (concat . concat) []
-= definición de composición
+= {definición de composición}
     concat (concat [])
-= definición de concat.1
+= {concat.1}
     concat []
-= definición de concat.1
-    []
+= {concat.1}
+    []                  (B)
 
     (A) = (B)   ✓
 
@@ -348,19 +352,19 @@ Hipótesis inductiva: (concat . map concat) ysss = (concat . concat) ysss
 Demostración:
 ‾‾‾‾‾‾‾‾‾‾‾‾‾
     (concat . map concat) (yss:ysss)
-= definición de composición
+= {definición de composición}
     concat (map concat (yss:ysss))
-= definición de map.2
+= {map.2}
     concat (concat yss : map concat ysss)
-= definición de concat.2
+= {concat.2}
     concat yss ++ concat (map concat ysss)
-= definición de composición
+= {definición de composición}
     concat yss ++ ((concat . map concat) ysss)
-= por hipótesis inductiva
+= {hipótesis inductiva}
     concat yss ++ ((concat . concat) ysss)
-= definición de composición
+= {definición de composición}
     concat yss ++ concat (concat ysss)
-= definición de concat.2
+= {concat.2}
     concat (concat yss : concat ysss)
 =
 --------------------------------------------
@@ -376,12 +380,14 @@ Demostración:
 ---------------------------------------------
 
 8)
-insert y [] = []
-insert y (x:xs) = if x < y then x:insert y xs else y:x:xs
+insert _ []     = []
+insert y (x:xs) = if x < y 
+                     then x : insert y xs 
+                     else y:x:xs
 
-evenPos [] = []
-evenPos [x] = [x]
-evenPos (x:y:xs) = x:evenPos xs
+evenPos []       = []
+evenPos [x]      = [x]
+evenPos (x:_:xs) = x : evenPos xs
 -- TODO averiguar bien !!
 -- Creo que no se puede, recordar que foldr :: (a -> b -> b) -> b -> [a] -> b
 -}
@@ -429,17 +435,17 @@ Hipótesis inductiva: (inits . map f) yss = (map (map f) . inits) yss
 Demostración:
 ‾‾‾‾‾‾‾‾‾‾‾‾‾
     (inits . map f) (ys:yss)
-= definición de composición
+= {definición de composición}
     inits (map f (ys:yss))
-= definicion de map.2
+= {map.2}
     inits (f ys : map f yss)
-= definición de inits.2
+= {inits.2}
     [f ys] : map ((f ys):) (inits (map f yss))
-= definición de composición
+= {definición de composición}
     [f ys] : map ((f ys):) ((inits . map f) yss)
-= por hipótesis inductiva
+= {hipótesis inductiva}
     [f ys] : map ((f ys):) ((map (map f) . inits) yss)
-= definición de composición
+= {definición de composición}
     [f ys] : map ((f ys):) ((map (map f) (inits yss)))
 =
     [f ys] : map ((f ys):) ((map f) )

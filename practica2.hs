@@ -6,13 +6,13 @@
 --    swap (4,3)
 -- c) constant
 constant :: Char -> Int
-constant x = 10
+constant _ = 10
 -- d) alwaysTrue, y alwaysFalse:
 alwaysTrue :: (Int, Char) -> Bool
-alwaysTrue (x,y) = True
+alwaysTrue (_,_) = True
 
 alwaysFalse :: (Int, Char) -> Bool
-alwaysFalse (x,y) = False
+alwaysFalse (_,_) = False
 -- e) mapping, mapping2
 mapping :: (Int -> Int) -> Int
 mapping x = 10
@@ -27,10 +27,10 @@ func2 :: (Bool -> Bool, Int) -> (Bool -> Bool, Int)
 func2 (f,g) = (f, g*10)
 -- g) mapToBool y mapToBool2
 mapToBool :: a -> Bool
-mapToBool x = True
+mapToBool _ = True
 
 mapToBool2 :: a -> Bool
-mapToBool2 x = False
+mapToBool2 _ = False
 -- h) identity (no hay otra función total de tipo a -> a)
 identity :: a -> a
 identity x = x
@@ -43,13 +43,13 @@ identity x = x
 
 -- 4)
 first :: (a, b) -> a
-first (x,y) = x
+first (x,_) = x
 
 second :: (a, b) -> b
-second (x,y) = y
+second (_,y) = y
 
 const :: a -> b -> a
-const x y = x
+const x _ = x
 
 compose :: (a -> b) -> (c -> a) -> c -> b
 compose f g = (\x -> f(g x))
@@ -85,9 +85,9 @@ f_ Mal formada, necesito separar ambos con &&
 -- 7)
 
 -- 8)
-data ColorPrimario = Azul |
-                     Rojo |
-                     Amarillo
+data ColorPrimario = Azul
+                   | Rojo
+                   | Amarillo
   deriving (Eq, Show)
 
 data ColorSecundario = Color' ColorPrimario ColorPrimario
@@ -108,10 +108,10 @@ distanciaA :: Punto -> Punto -> Float
 (Punto x1 y1) `distanciaA` (Punto x2 y2) = sqrt $ (x1 - x2)^2 + (y1 - y2)^2
 
 xcoord :: Punto -> Float
-xcoord (Punto x y) = x
+xcoord (Punto x _) = x
 
 ycoord :: Punto -> Float
-ycoord (Punto x y) = y
+ycoord (Punto _ y) = y
 
 suma :: Punto -> Punto -> Punto
 suma (Punto x1 y1) (Punto x2 y2) = Punto (x1+x2) (y1+y2)
@@ -127,16 +127,16 @@ distanciaA' :: Punto3D -> Punto3D -> Float
   sqrt $ (x1 - x2)^2 + (y1 - y2)^2 + (z1 - z2)^2
 
 xcoord' :: Punto3D -> Float
-xcoord' (Punto3D x y z) = x
+xcoord' (Punto3D x _ _) = x
 
 ycoord' :: Punto3D -> Float
-ycoord' (Punto3D x y z) = y
+ycoord' (Punto3D _ y _) = y
 
 suma' :: Punto3D -> Punto3D -> Punto3D
 suma' (Punto3D x1 y1 z1) (Punto3D x2 y2 z2) = Punto3D (x1+x2) (y1+y2) (z1+z2)
 
-data Figura = Circulo Punto Float |
-              Rectangulo Punto Punto
+data Figura = Circulo Punto Float
+            | Rectangulo Punto Punto
   deriving Show
 
 area :: Figura -> Float
@@ -154,9 +154,9 @@ mover (Circulo (Punto x y) r) (Punto a b) = Circulo (Punto (x+a) (y+b)) r
 mover (Rectangulo (Punto x1 y1) (Punto x2 y2)) (Punto a b) =
         Rectangulo (Punto (x1+a) (y1+b)) (Punto (x2+a) (y2+b))
 
-data Figura3D = Esfera Punto3D Float |
-                Cubo Punto3D  Punto3D  Punto3D  Punto3D |
-                Cilindro Punto3D Float Float
+data Figura3D = Esfera Punto3D Float
+              | Cubo Punto3D  Punto3D  Punto3D  Punto3D
+              | Cilindro Punto3D Float Float
   deriving Show
 
 area' :: Figura3D -> Float
@@ -211,7 +211,7 @@ scnd' = \x -> \y -> y
 
 andThen :: Bool -> Bool -> Bool
 andThen True y = y
-andThen False y = False
+andThen False _ = False
 
 andThen' :: Bool -> Bool -> Bool
 andThen' = \x -> \y -> if x == True
@@ -234,12 +234,12 @@ alpha :: a -> b -> b
 alpha = \x -> \x -> x
 
 alpha' :: a -> b -> b
-alpha' x y = y
+alpha' _ y = y
 
 -- 13)
 bhaskara :: Floating a => (a,a,a) -> (a,a)
-bhaskara (a,b,c) = (-b + aux, -b - aux)
-  where aux = (sqrt $ b^2 - (4*a*c))/(2*a)
+bhaskara (a,b,c) = ((-b + sqrtDet)/(2*a), (-b - sqrtDet)/(2*a))
+  where sqrtDet = sqrt $ b^2 - (4*a*c)
 
 {-
 14)

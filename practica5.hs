@@ -14,46 +14,46 @@ k_ Válido, []:[] equivale a [[]]
 -}
 
 -- 2)
-sum' (x:xs) = x + sum xs
 sum' [] = 0
+sum' (x:xs) = x + sum xs
 
-any' (x:xs) = x || any' xs
 any' [] = False
+any' (x:xs) = x || any' xs
 
-all' (x:xs) = x && all' xs
 all' [] = True
+all' (x:xs) = x && all' xs
 
-codes (x:xs) = ord x : codes xs
 codes [] = []
+codes (x:xs) = ord x : codes xs
 
-remainders n (x:xs) = x `mod` n : remainders n xs
 remainders _ [] = []
+remainders n (x:xs) = x `mod` n : remainders n xs
 
-squares (x:xs) = x*x : squares xs
 squares [] = []
+squares (x:xs) = x*x : squares xs
 
-lengths (xs:xss) = length xs : lengths xss
 lengths [] = []
+lengths (xs:xss) = length xs : lengths xss
 
+order [] = []
 order ((x,y):xs) = if x < 3*y
                       then (x,y): order xs
                       else order xs
-order [] = []
 
+pairs [] = []
 pairs (x:xs) = if x `mod` 2 == 0
                   then x : pairs xs
                   else pairs xs
-pairs [] = []
 
+chars [] = []
 chars (x:xs) = if isAlpha x
                   then x : chars xs
                   else chars xs
-chars [] = []
 
+moreThan _ [] = []
 moreThan n (xs:xss) = if length xs > n
                          then xs : moreThan n xss
                          else moreThan n xss
-moreThan _ [] = []
 
 -- 3) TODO
 
@@ -258,29 +258,32 @@ oddsIn (x:xs) = if x `mod` 2 == 1
 
 -- 10) TODO: completar
 data DigBin = Cero | Uno
-suma Cero x = x
-suma x Cero = x
+
+suma Cero x  = x
+suma x Cero  = x
 suma Uno Uno = Cero
 
 carry Uno Uno = Uno
-carry _ _ = Cero
+carry _ _     = Cero
 
 sumaCarry Cero Cero Cero = (Cero, Cero)
-sumaCarry Cero Cero Uno = (Uno, Cero)
-sumaCarry Cero Uno Cero = (Uno, Cero)
-sumaCarry Cero Uno Uno = (Cero, Uno)
-sumaCarry Uno Cero Cero = (Uno, Cero)
-sumaCarry Uno Cero Uno = (Cero, Uno)
-sumaCarry Uno Uno Cero = (Cero, Uno)
-sumaCarry Uno Uno Uno = (Uno, Uno)
+sumaCarry Cero Cero Uno  = (Uno, Cero)
+sumaCarry Cero Uno Cero  = (Uno, Cero)
+sumaCarry Cero Uno Uno   = (Cero, Uno)
+sumaCarry Uno Cero Cero  = (Uno, Cero)
+sumaCarry Uno Cero Uno   = (Cero, Uno)
+sumaCarry Uno Uno Cero   = (Cero, Uno)
+sumaCarry Uno Uno Uno    = (Uno, Uno)
 
-prod Cero _ = Cero
-prod _ Cero = Cero
+prod Cero _  = Cero
+prod _ Cero  = Cero
 prod Uno Uno = Uno
 
 type NumBin = [DigBin]
+
 sumabin xs ys = sumabin' xs ys Cero
+
 sumabin' (x:xs) (y:ys) c = suma (suma x y) c : sumabin' xs ys (snd(sumaCarry x y c))
-sumabin' (x:xs) [] c = sumabin' [] (x:xs) c
-sumabin' [] (x:xs) Uno = suma x Uno : sumabin' [] xs (carry x Uno)
-sumabin' [] (x:xs) Cero = x:xs
+sumabin' (x:xs) [] c     = sumabin' [] (x:xs) c
+sumabin' [] (x:xs) Uno   = suma x Uno : sumabin' [] xs (carry x Uno)
+sumabin' [] (x:xs) Cero  = x:xs
